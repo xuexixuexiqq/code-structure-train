@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "entry.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +57,15 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+rt_thread_t vcp_thread = RT_NULL;
 
+void vcp_thread_entry(void* parameter)
+{
+  while(1){
+    rt_thread_delay(1000);
+    rt_show_version();    
+  }
+}
 /* USER CODE END 0 */
 
 /**
@@ -91,7 +99,7 @@ int main(void)
   MX_FATFS_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-
+  RTT_CREATE(vcp,vcp_thread_entry,RT_NULL,256,5,20);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -99,8 +107,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    HAL_Delay(500);
-    VCPSend((uint8_t*)"HELLO\r\n", 7);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

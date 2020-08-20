@@ -1,6 +1,8 @@
 projects:
   vcp:
   - project.yaml
+  vcp-rtt:
+  - project_rtthread.yaml
 settings:
   export_dir:
   - generate_project
